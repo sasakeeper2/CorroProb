@@ -4,9 +4,10 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 import kagglehub
 import os
+from joblib import dump, load
 
 # Download dataset
-dataset_path = kagglehub.dataset_download("khushikyad001/finance-and-economics-dataset-2000-present")
+dataset_path = kagglehub.dataset_download("nikitamanaenkov/stock-portfolio-data-with-prices-and-indices")
 
 # Find the correct CSV file
 csv_files = [f for f in os.listdir(dataset_path) if f.endswith('.csv')]
@@ -23,9 +24,10 @@ df = df.select_dtypes(include=[np.number])
 
 # Drop rows with missing values
 df = df.dropna()
+del df['Adjusted']
 
 # Define target variable
-target_variable = "Close Price"
+target_variable = "Close"
 if target_variable not in df.columns:
     raise KeyError(f"'{target_variable}' column not found in dataset.")
 
@@ -79,3 +81,8 @@ print(f"WMSE for {target_variable}: {wmse}, sqrt(WMSE): {np.sqrt(wmse)}")
 # Save output
 predictions_df.to_csv('predictions_output.csv', index=False)
 print('Predictions output saved')
+
+# Save the model
+savePath = 'ensemble.joblib'
+dump(model, savePath)
+print('Model saved to: ', savePath)

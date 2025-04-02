@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
-
 # Load dataset
 df = pd.read_csv('housing_price_dataset.csv/housing_price_dataset.csv')
 
@@ -63,5 +62,9 @@ print(predictions_df.head())
 for feature in predictions:
     mse = mean_squared_error(df[target_variable], predictions[feature])
     wmse = mean_squared_error(df[target_variable], predictions_df['weighted_pred'])
-    print(f"WMSE for {feature}: {wmse}")
-    print(f"MSE for {feature}: {mse}")
+
+print(f"WMSE for {target_variable}: {wmse}, sqrt(WMSE): {np.sqrt(wmse)}")
+print(f"MSE for {target_variable}: {mse}, sqrt(MSE): {np.sqrt(mse)}")
+
+predictions_df.to_csv('predictions_output.csv', index=False)
+print('Predictions output saved')

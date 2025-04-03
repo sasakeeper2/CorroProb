@@ -8,6 +8,7 @@ from joblib import dump, load
 
 # Download dataset
 dataset_path = kagglehub.dataset_download("nikitamanaenkov/stock-portfolio-data-with-prices-and-indices")
+dataset_path = 'housing_price_dataset.csv'
 
 # Find the correct CSV file
 csv_files = [f for f in os.listdir(dataset_path) if f.endswith('.csv')]
@@ -26,7 +27,7 @@ df = df.select_dtypes(include=[np.number])
 df = df.dropna()
 
 # Define target variable
-target_variable = "Close"
+target_variable = "Price"
 if target_variable not in df.columns:
     raise KeyError(f"'{target_variable}' column not found in dataset.")
 

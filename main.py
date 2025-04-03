@@ -24,7 +24,6 @@ df = df.select_dtypes(include=[np.number])
 
 # Drop rows with missing values
 df = df.dropna()
-del df['Adjusted']
 
 # Define target variable
 target_variable = "Close"
